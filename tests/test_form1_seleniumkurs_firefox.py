@@ -23,7 +23,8 @@ class TestLoginParametrisiertSeleniumkursFirefox(unittest.TestCase):
 
     def setUp(self) -> None:
         print("Initialisiere Webdriver für Test")
-        self.driver = webdriver.Firefox()
+        geckodriver_path = r'C:\Users\Dominik\AppData\Local\Programs\Python\Python311\Scripts\geckodriver.exe'
+        self.driver = webdriver.Firefox(executable_path=geckodriver_path)
         self.driver.get("https://seleniumkurs.codingsolo.de")
 
     def tearDown(self) -> None:
