@@ -3,6 +3,7 @@ import requests
 
 from parameterized import parameterized_class
 from selenium import webdriver
+from bs4 import BeautifulSoup
 import unittest
 
 from pages.seleniumkurs_home_page import SeleniumKursHomePage
@@ -14,16 +15,27 @@ from pages.seleniumkurs_testform1_page import SeleniumKursTestform1Page
 url = 'https://github.com/DominikJRau/PythonTests/blob/main/tests/test_config.json'
 
 response = requests.get(url)
+
 if response.status_code == 200:
-    with open('C:/drivers/test_config.json', 'wb') as f:
-        f.write(response.content)
-        print("Die 'test_config.json'-Datei wurde erfolgreich heruntergeladen und gespeichert.")
-else:
-    print("Fehler beim Herunterladen der 'test_config.json'-Datei:", response.status_code)
+    # Parse the HTML page
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Extract the JSON data from the HTML page
+    json_string = soup.find('div', class_='Box-body').text
+
+    # Load the JSON data
+    config = json.loads(json_string)
+
+#if response.status_code == 200:
+    #with open('C:/drivers/test_config.json', 'wb') as f:
+        #f.write(response.content)
+        #print("Die 'test_config.json'-Datei wurde erfolgreich heruntergeladen und gespeichert.")
+#else:
+    #print("Fehler beim Herunterladen der 'test_config.json'-Datei:", response.status_code)
 
 # Laden der 'test_config.json'-Datei und Verwendung mit @parameterized_class-Decorator
-config_file = open('C:/drivers/test_config.json', 'r')
-config = json.load(config_file)
+#config_file = open('C:/drivers/test_config.json', 'r')
+#config = json.load(config_file)
 
 # Verwendung des 'tests'-Schlüssels aus der 'test_config.json'-Datei im @parameterized_class-Decorator
 @parameterized_class(config['tests'])
