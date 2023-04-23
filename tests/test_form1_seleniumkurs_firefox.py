@@ -10,7 +10,7 @@ from pages.seleniumkurs_test_app_page import SeleniumKursTestappPage
 from pages.seleniumkurs_testform1_page import SeleniumKursTestform1Page
 
 
-@parameterized_class(json.load(open('test_config.json'))['tests'])
+@parameterized_class(json.load(open('https://github.com/DominikJRau/PythonTests/blob/main/tests/test_config.json'))['tests'])
 
 class TestLoginParametrisiertSeleniumkursFirefox(unittest.TestCase):
 
